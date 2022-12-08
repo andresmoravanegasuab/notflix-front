@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import "./TopMenu.css"
 
 export const TopMenu=()=>{
@@ -29,7 +30,7 @@ export const TopMenu=()=>{
 
     const subMenu = ()=>(        
             <div class="navbar">
-            <a href="#home">Home</a>
+            <Link to="/">Home</Link>
             <div class="subnav">
                 <button class="subnavbtn">About <i class="fa fa-caret-down"></i></button>
                 <div class="subnav-content">
@@ -41,8 +42,8 @@ export const TopMenu=()=>{
             <div class="subnav">
                 <button class="subnavbtn">Categorías <i class="fa fa-caret-down"></i></button>
                 <div class="subnav-content">
-                    {categories.map((item,idx)=>(
-                    <a key={idx} href="#bring">{item.name}</a>
+                    {categories.map((item,idx)=>(                        
+                        <Link key={idx} to={`/category/${item.name}`}>{item.name}</Link>
                     ))}
                 
                 </div>

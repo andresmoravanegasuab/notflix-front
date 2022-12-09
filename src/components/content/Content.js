@@ -9,9 +9,6 @@ export const Content = () => {
   useEffect(() => {    
     //getMovies();
     getMoviesAsync();
-    setTimeout(() => {
-      console.log("hola esperé 3 segundos")
-    }, 3000);
   }, []);
 
   const getMovies = () => {
@@ -41,10 +38,11 @@ export const Content = () => {
           description={!movie.description?"No hay descripción":movie.description}
           staffList={movie.staffList}
           image={
-            !movie.image
+            !movie.imageLink
               ? "https://picsum.photos/seed/picsum/200/300"
-              : movie.image          
+              : movie.imageLink          
           }
+          id={movie.id}
         />
       ))}
     </div>

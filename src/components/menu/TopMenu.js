@@ -1,3 +1,8 @@
+import Container from "react-bootstrap/Container";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
+import NavDropdown from "react-bootstrap/NavDropdown";
+
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./TopMenu.css";
@@ -24,7 +29,7 @@ export const TopMenu = () => {
     "Mi cuenta",
   ];
 
-  const subMenu = () => (
+  const clasicMenu = () => (
     <div className="navbar">
       <Link to="/">Inicio</Link>
       <div className="subnav">
@@ -64,5 +69,41 @@ export const TopMenu = () => {
     </div>
   );
 
-  return subMenu();
+  const bootstrapMenu = () => (
+    <Navbar bg="light" expand="lg">
+      <Container>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="me-auto">
+            <Nav.Link href="#home">
+              <Link to="/">Inicio</Link>
+            </Nav.Link>
+            <NavDropdown title="Categorías" id="basic-nav-dropdown">
+              {categories.map((item, idx) => (
+                <NavDropdown.Item>
+                  <Link key={idx} to={`/category/${item.name}`}>
+                    {item.name}
+                  </Link>
+                </NavDropdown.Item>
+              ))}
+            </NavDropdown>
+            <Nav.Link>
+              <Link to={`/category/`}>Más vistas</Link>
+            </Nav.Link>
+            <Nav.Link href="#link">
+              <Link to={`/view`}>Mis listas</Link>
+            </Nav.Link>
+            <Nav.Link href="#link">
+              <Link to={`/scores`}>Mis calificados</Link>
+            </Nav.Link>
+            <Nav.Link href="#link">
+              <Link to={`/account`}>Mi cuenta</Link>
+            </Nav.Link>
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
+  );
+
+  return bootstrapMenu();
 };

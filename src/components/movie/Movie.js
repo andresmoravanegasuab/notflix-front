@@ -1,27 +1,46 @@
+import Toast from 'react-bootstrap/Toast';
+
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import "./Movie.css";
 
 export const Movie = () => {
   const params = useParams();
+  const [movieId, setMovieId] = useState('');
   const [movie, setMovie] = useState({});
   const [score, setScore] = useState([]);
 
   useEffect(() => {    
     //getMovies();
+    setMovieId(params.id)
     getMovie();
     setScoreData()
   }, []);
 
   const getMovie = async () => {
+    
     let response = await fetch("http://localhost:8080/api/movie/"+params.id);
     response = await response.json();    
     setMovie(response);    
   };
 
-  const sendScoreApi=async()=>{
-    let response = await fetch("http://localhost:8080/api/score");
+  const sendScoreApi=async(score)=>{
+    const scoreDTO ={
+      score:score,
+      clientId:'6380442df71ad74770fc57e1',
+      movieId:movieId
+    }
+
+    const requestData={
+      method:'POST',
+      body: JSON.stringify(scoreDTO),
+      headers:{
+        "Content-type":"application/json"
+      }
+    }
+    let response = await fetch("http://localhost:8080/api/score",requestData);
     response = await response.json();    
+    console.log(response)
   }
 
   const setScoreData=()=>{
@@ -32,10 +51,21 @@ export const Movie = () => {
     setScore(scores)
   }
 
-  const sendScore=(event)=>{
+  const sendScore=async(event)=>{
     const {value}=event.target;
-    console.log(`value`,value);
+    await sendScoreApi(value)    
   }
+
+  const message=()=>(
+    <Toast>
+    <Toast.Header>
+      <img src="holder.js/20x20?text=%20" className="rounded me-2" alt="" />
+      <strong className="me-auto">Bootstrap</strong>
+      <small>11 mins ago</small>
+    </Toast.Header>
+    <Toast.Body>Hello, world! This is a toast message.</Toast.Body>
+  </Toast>
+  )
 
   return (
     <div className="movie-container">
@@ -82,6 +112,7 @@ export const Movie = () => {
                     ))}
                 </select>
           </div>
+          
         </div>
       </div>
     </div>

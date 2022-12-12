@@ -30,9 +30,9 @@ export const Content = () => {
   };
 
   return (
-    <div className="flex">
+    <div className="row">
       {movies.map((movie, idx) => (
-        <Card
+        <Card          
           key={idx}
           name={movie.name}
           description={!movie.description?"No hay descripción":movie.description}

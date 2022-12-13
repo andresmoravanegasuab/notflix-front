@@ -35,7 +35,8 @@ export const Movie = () => {
       method:'POST',
       body: JSON.stringify(scoreDTO),
       headers:{
-        "Content-type":"application/json"
+        "Content-type":"application/json",
+        "Authorization":`Basic ${btoa("andres@gmail.com:909080")}`
       }
     }
     let response = await fetch("http://localhost:8080/api/score",requestData);

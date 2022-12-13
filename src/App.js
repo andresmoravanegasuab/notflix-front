@@ -1,13 +1,15 @@
-import {BrowserRouter as Router, Route, Link, Routes} from 'react-router-dom';
-import {useParams} from 'react-router-dom';
-import './App.css';
-import { Category } from './components/category/Category';
-import { Content } from './components/content/Content';
-import Footer from './components/footer/Footer';
+import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import "./App.css";
+import { Category } from "./components/category/Category";
+import { Content } from "./components/content/Content";
+import Footer from "./components/footer/Footer";
 
-import { Header } from './components/header/Header';
-import { Movie } from './components/movie/Movie';
-import { Sidebar } from './components/sidebar/Sidebar';
+import { Header } from "./components/header/Header";
+import { Login } from "./components/login/Login";
+import { Movie } from "./components/movie/Movie";
+import { Register } from "./components/register/Register";
+import { Sidebar } from "./components/sidebar/Sidebar";
 
 function App() {
   return (
@@ -18,8 +20,10 @@ function App() {
         <Routes>
           <Route path="/category/:name" element={<Category />} />
           <Route path="/movie/:id" element={<Movie />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/" element={<Content />} />
-        </Routes>        
+        </Routes>
         <Footer />
       </Router>
     </div>

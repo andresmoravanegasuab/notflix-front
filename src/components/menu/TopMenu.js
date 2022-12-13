@@ -80,7 +80,7 @@ export const TopMenu = () => {
             </Nav.Link>
             <NavDropdown title="Categorías" id="basic-nav-dropdown">
               {categories.map((item, idx) => (
-                <NavDropdown.Item>
+                <NavDropdown.Item key={idx}>
                   <Link key={idx} to={`/category/${item.name}`}>
                     {item.name}
                   </Link>

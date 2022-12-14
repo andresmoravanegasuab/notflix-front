@@ -1,8 +1,22 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 export const Login = () => {
+  let navigate = useNavigate();
+
+  useEffect(() => {
+    checkLogin();
+  }, []);
+
+  const checkLogin = () => {
+    if (localStorage.getItem("authData")) {
+      navigate("/movies");
+    }
+  };
+
   const [formData, setFormData] = useState({
     user: "",
     password: "",
@@ -17,7 +31,18 @@ export const Login = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const response = await sendAuthApi();
-    console.log(`response`, response);
+
+    if (response && response.token && response.token != "") {
+      localStorage.setItem("authData", JSON.stringify(response));
+      navigate("/movies");
+    } else {
+      Swal.fire({
+        title: "Error!",
+        text: "Credenciales no válidas",
+        icon: "error",
+        confirmButtonText: "Reintentar",
+      });
+    }
   };
 
   const sendAuthApi = async () => {

@@ -4,11 +4,12 @@ import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./TopMenu.css";
 
 export const TopMenu = () => {
   const [categories, setCategories] = useState([]);
+  let navigate = useNavigate();
 
   useEffect(() => {
     getCategoriesAsync();
@@ -69,6 +70,17 @@ export const TopMenu = () => {
     </div>
   );
 
+  const logOut = () => {
+    localStorage.clear();
+    navigate("/");
+  };
+
+  const renderLogout = () => {
+    if (localStorage.getItem("authData")) {
+      return <a onClick={logOut}>Cerrar sesión</a>;
+    }
+  };
+
   const bootstrapMenu = () => (
     <Navbar bg="light" expand="lg">
       <Container>
@@ -99,6 +111,7 @@ export const TopMenu = () => {
             <Nav.Link href="#link">
               <Link to={`/account`}>Mi cuenta</Link>
             </Nav.Link>
+            <Nav.Link href="#link">{renderLogout()}</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>

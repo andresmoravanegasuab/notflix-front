@@ -21,8 +21,8 @@ function App() {
           <Route path="/category/:name" element={<Category />} />
           <Route path="/movie/:id" element={<Movie />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/" element={<Content />} />
+          <Route path="/movies" element={<Content />} />
+          <Route path="/" element={<Login />} />
         </Routes>
         <Footer />
       </Router>

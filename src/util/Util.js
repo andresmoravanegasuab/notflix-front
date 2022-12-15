@@ -7,3 +7,11 @@ export const getToken = () => {
 
   return token;
 };
+
+export const isAuth = () => {
+  if (localStorage.getItem("authData")) {
+    return true;
+  }
+};
+
+export const API_URL = process.env.REACT_APP_BACK_URL;

@@ -3,7 +3,7 @@ import Toast from "react-bootstrap/Toast";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import "./Movie.css";
-import { getToken } from "../../util/Util";
+import { API_URL, getToken } from "../../util/Util";
 import Swal from "sweetalert2";
 
 export const Movie = () => {
@@ -11,35 +11,64 @@ export const Movie = () => {
   const [movieId, setMovieId] = useState("");
   const [movie, setMovie] = useState({});
   const [score, setScore] = useState([]);
+  const [scoreSelected, setScoreSelected] = useState("");
+  const [scoreId, setScoreId] = useState("");
 
   useEffect(() => {
     //getMovies();
     setMovieId(params.id);
     getMovie();
     setScoreData();
-  }, []);
+    checkScore();
+  }, [scoreSelected]);
 
   const getMovie = async () => {
-    let response = await fetch("http://localhost:8080/api/movie/" + params.id);
+    let response = await fetch(API_URL + "movie/" + params.id);
     response = await response.json();
     setMovie(response);
   };
 
+  const checkScore = async () => {
+    const requestData = {
+      method: "GET",
+      headers: {
+        "Content-type": "application/json",
+        Authorization: getToken(),
+      },
+    };
+    let response = await fetch(
+      API_URL + "score/check/" + params.id,
+      requestData
+    );
+    response = await response.json();
+    //const response = { id: "6399cfadc9e9a77c999e8306", score: 6 };
+    if (response.id != null && response.score != null) {
+      setScoreSelected(response.score);
+      setScoreId(response.id);
+    }
+  };
+
   const sendScoreApi = async (score) => {
+    let method = "post";
+    if (scoreSelected != "") {
+      method = "put";
+    }
+
     const scoreDTO = {
       score: score,
       movieId: movieId,
     };
 
     const requestData = {
-      method: "POST",
+      method,
       body: JSON.stringify(scoreDTO),
       headers: {
         "Content-type": "application/json",
         Authorization: getToken(),
       },
     };
-    let response = await fetch("http://localhost:8080/api/score", requestData);
+
+    let response = await fetch(API_URL + "score/" + scoreId, requestData);
     response = await response.json();
     if (response.status == true) {
       Swal.fire({
@@ -122,10 +151,8 @@ export const Movie = () => {
           </div>
           <div className="rate">
             <p>Calificar pelicula</p>
-            <select onChange={sendScore}>
-              <option defaultValue={"Sin calificar"} selected disabled>
-                Sin calificar
-              </option>
+            <select value={scoreSelected} onChange={sendScore}>
+              <option>Sin calificar</option>
               {score.map((element, idx) => (
                 <option key={idx}>{element}</option>
               ))}

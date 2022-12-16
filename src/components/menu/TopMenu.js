@@ -22,64 +22,9 @@ export const TopMenu = () => {
     setCategories(response);
   };
 
-  const items = [
-    "Inicio",
-    "Categorías",
-    "Más vistas",
-    "Mis listas",
-    "Mis calificados",
-    "Mi cuenta",
-  ];
-
-  const clasicMenu = () => (
-    <div className="navbar">
-      <Link to="/">Inicio</Link>
-      <div className="subnav">
-        <button className="subnavbtn">
-          Categorías <i className="fa fa-caret-down"></i>
-        </button>
-        <div className="subnav-content">
-          {categories.map((item, idx) => (
-            <Link key={idx} to={`/category/${item.name}`}>
-              {item.name}
-            </Link>
-          ))}
-        </div>
-      </div>
-      <div className="subnav">
-        <button className="subnavbtn">
-          Partners <i className="fa fa-caret-down"></i>
-        </button>
-        <div className="subnav-content">
-          <a href="#link1">Link 1</a>
-          <a href="#link2">Link 2</a>
-          <a href="#link3">Link 3</a>
-          <a href="#link4">Link 4</a>
-        </div>
-      </div>
-      <a href="#contact">Contact</a>
-    </div>
-  );
-
-  const oldMenu = () => (
-    <div classNameName="scrollmenu">
-      {items.map((item, idx) => (
-        <a key={idx} href="#home">
-          {item}
-        </a>
-      ))}
-    </div>
-  );
-
   const logOut = () => {
     localStorage.clear();
     navigate("/");
-  };
-
-  const renderLogout = () => {
-    if (localStorage.getItem("authData")) {
-      return <a onClick={logOut}>Cerrar sesión</a>;
-    }
   };
 
   const bootstrapMenu = () => (
@@ -89,31 +34,33 @@ export const TopMenu = () => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link href="#home">
-                <Link to="/">Inicio</Link>
+              <Nav.Link as={Link} to="/">
+                Inicio
               </Nav.Link>
               <NavDropdown title="Categorías" id="basic-nav-dropdown">
                 {categories.map((item, idx) => (
-                  <NavDropdown.Item key={idx}>
-                    <Link key={idx} to={`/category/${item.name}`}>
-                      {item.name}
-                    </Link>
+                  <NavDropdown.Item
+                    as={Link}
+                    key={idx}
+                    to={`/category/${item.name}`}
+                  >
+                    {item.name}
                   </NavDropdown.Item>
                 ))}
               </NavDropdown>
-              <Nav.Link>
-                <Link to={`/category/`}>Más vistas</Link>
+              <Nav.Link as={Link} to={`/category/`}>
+                Más vistas
               </Nav.Link>
-              <Nav.Link href="#link">
-                <Link to={`/view`}>Mis listas</Link>
+              <Nav.Link as={Link} to={`/view`}>
+                Mis listas
               </Nav.Link>
-              <Nav.Link href="#link">
-                <Link to={`/scores`}>Mis calificados</Link>
+              <Nav.Link as={Link} to={`/scores`}>
+                Mis calificados
               </Nav.Link>
-              <Nav.Link href="#link">
-                <Link to={`/account`}>Mi cuenta</Link>
+              <Nav.Link as={Link} to={`/account`}>
+                Mi cuenta
               </Nav.Link>
-              <Nav.Link href="#link">{renderLogout()}</Nav.Link>
+              <Nav.Link onClick={logOut}>Cerrar sesión</Nav.Link>
             </Nav>
           </Navbar.Collapse>
         </Container>

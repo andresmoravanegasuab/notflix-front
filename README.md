@@ -9,6 +9,7 @@ yum install -y zip unzip
 curl -s "https://get.sdkman.io" | bash
 source "$HOME/.sdkman/bin/sdkman-init.sh"
 sdk install maven
+yum install httpd
 systemctl start httpd
 systemctl enable httpd.service
 firewall-cmd --add-service=http --permanent

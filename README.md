@@ -2,6 +2,7 @@
 
 ### Instrucciones backend:
 
+```sh
 yum update
 yum install -y jdk-11.aarch64
 yum install -y zip unzip
@@ -17,6 +18,7 @@ sudo firewall-cmd --zone=public --permanent --add-port=8080/tcp
 sudo firewall-cmd --reload
 
 service httpd restart
+```
 
 ### htaccess config
 

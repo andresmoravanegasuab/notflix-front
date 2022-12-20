@@ -134,7 +134,7 @@ export const Movie = () => {
                     {staff.name} {staff.lastName} ({staff.rol})
                   </p>
                 ))
-              : "No hay elenco definido"}
+              : "No hay elenco definido para esta pelicula"}
           </div>
           <div className="category-list">
             {movie.categories && movie.categories.length > 0

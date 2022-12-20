@@ -40,13 +40,23 @@ service httpd restart
 
 ```
 
+# Corregir error 404 no encontrado al recargar el front:
+
 File to edit and change
 nano /etc/httpd/conf/httpd.conf
 
-Change from
+Change from in line 154
 
 AllowOverride None
 
 to
 
 AllowOverride All
+
+Reload the httpd:
+service httpd restart
+
+## Ruta por defecto donde se debe cargar el front en el server
+
+/var/www/html/
+->en esta carpeta debe ir nuestro build (contenido)
